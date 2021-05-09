@@ -22,7 +22,7 @@ const main = async () => {
                 offset: message.offset,
                 headers: message.headers,
                 key: message.key.toString(),
-                value: message.value.toString()
+                value: JSON.parse(message.value.toString())
             })
         }
     })
