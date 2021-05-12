@@ -9,9 +9,11 @@ const consumer = kafka.consumer({
 const main = async () => {
     await consumer.connect()
 
-    await consumer.subscribe({
-        topic: process.env.TOPIC,
-        fromBeginning: true
+    process.env.TOPICS.split(/\s+/).forEach(async topic => {
+        await consumer.subscribe({
+            topic,
+            fromBeginning: true
+        })
     })
 
     await consumer.run({
@@ -21,8 +23,8 @@ const main = async () => {
                 partition,
                 offset: message.offset,
                 headers: message.headers,
-                key: message.key.toString(),
-                value: JSON.parse(message.value.toString())
+                key: message.key?.toString(),
+                value: message.value.toString()
             })
         }
     })
