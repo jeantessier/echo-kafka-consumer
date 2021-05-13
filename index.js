@@ -1,10 +1,12 @@
 require('dotenv').config();
 
 const kafka = require('./kafka')
+const uuidv4 = require('uuid/v4');
 
-const consumer = kafka.consumer({
-    groupId: process.env.GROUP_ID
-})
+const groupId = process.env.GROUP_ID ? process.env.GROUP_ID : uuidv4();
+console.log(`Consumer group: ${groupId}`)
+
+const consumer = kafka.consumer({groupId})
 
 const main = async () => {
     await consumer.connect()
