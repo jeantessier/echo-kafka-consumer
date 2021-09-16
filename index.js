@@ -20,11 +20,15 @@ const main = async () => {
 
     await consumer.run({
         eachMessage: async ({ topic, partition, message }) => {
+            const headers = {}
+            for (const headerName in message.headers) {
+                headers[headerName] = message.headers[headerName].toString()
+            }
             console.log('Received message', {
                 topic,
                 partition,
                 offset: message.offset,
-                headers: message.headers,
+                headers: headers,
                 key: message.key?.toString(),
                 value: message.value.toString()
             })
