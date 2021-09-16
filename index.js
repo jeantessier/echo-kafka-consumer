@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const kafka = require('./kafka')
-const uuidv4 = require('uuid/v4');
+const { v4: uuidv4 } = require('uuid');
 
 const groupId = process.env.GROUP_ID ? process.env.GROUP_ID : uuidv4();
 console.log(`Consumer group: ${groupId}`)
